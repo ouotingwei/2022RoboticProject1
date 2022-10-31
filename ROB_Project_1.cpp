@@ -11,7 +11,7 @@ TODO:
     3. use atan2 to calculate ok
     4.input: Cartesian point (n, o, a, p), output: the corresponding joint variables.
     5.input: joint variables, output: Cartesian point (n, o, a, p) and (x, y, z, ϕ, θ, ψ). ok
-    6.inverse kinamatics error correction
+    6.inverse kinamatics error correction (asin & float)
     
 */
 #include<iostream>
