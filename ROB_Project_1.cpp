@@ -24,25 +24,25 @@ void joint_variables_mode_input();
 void CartesianPoint_input();
 void joint_variables_mode_output();
 void CartesianPoint_output();
-void output_check();
+void output_check(double JOINT_VARIABLE_SOLUTION[6]);
 
 //GLOBAL VARIABLE
-float PI = 3.1415926;
-float d2 = 6.375;
+double PI = 3.14159265359;
+double d2 = 6.375000;
 char mode;
-float CartesianPoint[4]={0,0,0,0}; // [0] = n, [1] = o, [2] = a, [3] = p
-float joint_variables[6]={0,0,0,0,0,0}; // [0] = θ1, [1] = θ2, [2] = d3 , [3] = θ4, [4] = θ5, [5] = d6
-Eigen::Matrix<float, 4, 4> noap_input;
+double CartesianPoint[4]={0,0,0,0}; // [0] = n, [1] = o, [2] = a, [3] = p
+double joint_variables[6]={0,0,0,0,0,0}; // [0] = θ1, [1] = θ2, [2] = d3 , [3] = θ4, [4] = θ5, [5] = d6
+Eigen::Matrix<double, 4, 4> noap_input;
 
 //8 solution by calculation
-float JOINT_VARIABLE_SOLUTION_1[6] = {0,0,0,0,0,0};
-float JOINT_VARIABLE_SOLUTION_2[6] = {0,0,0,0,0,0};
-float JOINT_VARIABLE_SOLUTION_3[6] = {0,0,0,0,0,0};
-float JOINT_VARIABLE_SOLUTION_4[6] = {0,0,0,0,0,0};
-float JOINT_VARIABLE_SOLUTION_5[6] = {0,0,0,0,0,0};
-float JOINT_VARIABLE_SOLUTION_6[6] = {0,0,0,0,0,0};
-float JOINT_VARIABLE_SOLUTION_7[6] = {0,0,0,0,0,0};
-float JOINT_VARIABLE_SOLUTION_8[6] = {0,0,0,0,0,0};
+double JOINT_VARIABLE_SOLUTION_1[6] = {0,0,0,0,0,0};
+double JOINT_VARIABLE_SOLUTION_2[6] = {0,0,0,0,0,0};
+double JOINT_VARIABLE_SOLUTION_3[6] = {0,0,0,0,0,0};
+double JOINT_VARIABLE_SOLUTION_4[6] = {0,0,0,0,0,0};
+double JOINT_VARIABLE_SOLUTION_5[6] = {0,0,0,0,0,0};
+double JOINT_VARIABLE_SOLUTION_6[6] = {0,0,0,0,0,0};
+double JOINT_VARIABLE_SOLUTION_7[6] = {0,0,0,0,0,0};
+double JOINT_VARIABLE_SOLUTION_8[6] = {0,0,0,0,0,0};
 
 //WHILE FLAG
 bool while_flag = false;
@@ -53,13 +53,22 @@ using namespace std;
 
 int main(){
 
-    while(1){   //press ctrl-c to stop 
+    while(1){   //press ctrl-c to stop the loop
         choose_input_mode();
 
-        if(mode == 'a'){    //choose mode a ,will into this loop
-            CartesianPoint_input();
+        if(mode == 'a'){    //choose mode a will into this loop
+            CartesianPoint_input(); 
             CartesianPoint_output();
-            //output_check();
+            output_check(JOINT_VARIABLE_SOLUTION_1);
+            output_check(JOINT_VARIABLE_SOLUTION_2);
+            output_check(JOINT_VARIABLE_SOLUTION_3);
+            output_check(JOINT_VARIABLE_SOLUTION_4);
+            output_check(JOINT_VARIABLE_SOLUTION_5);
+            output_check(JOINT_VARIABLE_SOLUTION_6);
+            output_check(JOINT_VARIABLE_SOLUTION_7);
+            output_check(JOINT_VARIABLE_SOLUTION_8);
+
+            cout<<"-----------------------------------"<<endl;
 
         }else{              //choose mode b ,will into this loop
             joint_variables_mode_input();
@@ -200,54 +209,44 @@ void CartesianPoint_input(){
     cout<<" | 20 , 21 , 22 , 23 |"<<endl;
     cout<<" | 30 , 31 , 32 , 33 |"<<endl;
 
-    /*
-    for(int column = 0; column < 4; column++){
-        for(int row = 0; row < 4 ; row++){
-            cout<<" -> please enter "<<row<<column<<" : ";
-            cin>>noap_input(row, column);
-        }
-    }
-    */
-    noap_input(0, 0) = 0.3129;
-    noap_input(1, 0) = 0.7773;
-    noap_input(2, 0) = -0.5258;
+    //test data
+    noap_input(0, 0) = 0.312899788315632;
+    noap_input(1, 0) = 0.777300157424024;
+    noap_input(2, 0) = -0.525800501777546;
     noap_input(3, 0) = 0;
 
-    noap_input(0, 1) = -0.7773;
-    noap_input(1, 1) = 0.5398;
-    noap_input(2, 1) = 0.3231;
+    noap_input(0, 1) = -0.777300157424024;
+    noap_input(1, 1) = 0.539800721952620;
+    noap_input(2, 1) = 0.323140288184588;
     noap_input(3, 1) = 0;
 
-    noap_input(0, 2) = 0.5458;
-    noap_input(1, 2) = 0.3231;
-    noap_input(2, 2) = 0.7731;    
+    noap_input(0, 2) = 0.545800501777546;
+    noap_input(1, 2) = 0.323140288184588;
+    noap_input(2, 2) = 0.773099066363012;    
     noap_input(3, 2) = 0;
 
-    noap_input(0, 3) = 4.2475;
-    noap_input(1, 3) = 8.3301;
-    noap_input(2, 3) = 18.7939;
+    noap_input(0, 3) = 4.247497683164255;
+    noap_input(1, 3) = 8.330096026320385;
+    noap_input(2, 3) = 18.793852415718170;
     noap_input(3, 3) = 1;
 
-    cout<<noap_input<<endl;
-
-    
-    //cout<<noap_input<<endl;
     cout<<"-----------------------------------"<<endl;
 }
 
 //this function handles for computing joint variables input and output Cartesian Point & eular angle
-//this function using local variable : x, y, z, a, A, B, C
-//this function will print Cartesian Point
+//this function using local variable 'x' 'y' 'z' 'a' 'A' 'B' 'C'
+//this function using local double matrix 'A1' 'A2' 'A3' 'A4' 'A5' 'A6' 'T6'
+//this function will calculate & print Cartesian Point
 void joint_variables_mode_output(){
     
-    float x, y, z, A, B, C, a;
-    Matrix<float, 4, 4> A1;
-    Matrix<float, 4, 4> A2;
-    Matrix<float, 4, 4> A3;
-    Matrix<float, 4, 4> A4;
-    Matrix<float, 4, 4> A5;
-    Matrix<float, 4, 4> A6;
-    Matrix<float, 4, 4> T6;
+    double x, y, z, A, B, C, a;
+    Matrix<double, 4, 4> A1;
+    Matrix<double, 4, 4> A2;
+    Matrix<double, 4, 4> A3;
+    Matrix<double, 4, 4> A4;
+    Matrix<double, 4, 4> A5;
+    Matrix<double, 4, 4> A6;
+    Matrix<double, 4, 4> T6;
 
     A1 <<    cos(joint_variables[0]),  0, -1*sin(joint_variables[0]), 0,
              sin(joint_variables[0]),  0,    cos(joint_variables[0]), 0,
@@ -306,16 +305,19 @@ void joint_variables_mode_output(){
     cout<<"-----------------------------------"<<endl;
 }
 
-//this function handles inverse kinematics
+//this function handles inverse kinematics & calculate six JOINT VARIABLE
+//this function using local variable 'double theta' & 'temp_a' 'temp_b'
+//this function using global matrix 'noap_input'
+//this finction will assign value to global array 'JOINT_VARIABLE_SOLUTION'
 void CartesianPoint_output(){
-    float theta_1_1, theta_1_2, 
-          theta_2_1, theta_2_2, theta_2_3, theta_2_4,
-          theta_4_1, theta_4_2, theta_4_3, theta_4_4,
-          theta_5_1, theta_5_2, theta_5_3, theta_5_4,
-          theta_6_1, theta_6_2, theta_6_3, theta_6_4,
-          d_3_1, d_3_2;
+    double theta_1_1, theta_1_2, 
+           theta_2_1, theta_2_2, theta_2_3, theta_2_4,
+           theta_4_1, theta_4_2, theta_4_3, theta_4_4,
+           theta_5_1, theta_5_2, theta_5_3, theta_5_4,
+           theta_6_1, theta_6_2, theta_6_3, theta_6_4,
+           d_3_1, d_3_2;
 
-    float temp_a, temp_b;
+    double temp_a, temp_b;
 
     //dx = 03 ; dy = 13 ; dz = 23
 
@@ -347,13 +349,13 @@ void CartesianPoint_output(){
 
     //θ2-3 (-20)
     theta_2_3 = atan2((cos(theta_1_2)*noap_input(0, 3)) + (sin(theta_1_2)*noap_input(1, 3)), noap_input(2, 3));
-        JOINT_VARIABLE_SOLUTION_1[1] = (theta_2_2*180/PI);
-        JOINT_VARIABLE_SOLUTION_2[1] = (theta_2_2*180/PI);
+        JOINT_VARIABLE_SOLUTION_1[1] = (theta_2_3*180/PI);
+        JOINT_VARIABLE_SOLUTION_2[1] = (theta_2_3*180/PI);
 
     //θ2-4 (-160)
     theta_2_4 = atan2((cos(theta_1_2)*noap_input(0, 3)) + (sin(theta_1_2)*noap_input(1, 3)), -1*noap_input(2, 3));
-        JOINT_VARIABLE_SOLUTION_7[1] = (theta_2_3*180/PI);
-        JOINT_VARIABLE_SOLUTION_8[1] = (theta_2_3*180/PI);
+        JOINT_VARIABLE_SOLUTION_7[1] = (theta_2_4*180/PI);
+        JOINT_VARIABLE_SOLUTION_8[1] = (theta_2_4*180/PI);
 
     //d3 -> two solution
     //d_3_1 (20)
@@ -362,9 +364,10 @@ void CartesianPoint_output(){
         JOINT_VARIABLE_SOLUTION_2[2] = d_3_1;
         JOINT_VARIABLE_SOLUTION_5[2] = d_3_1;
         JOINT_VARIABLE_SOLUTION_6[2] = d_3_1;
+        cout<<"[1]"<<JOINT_VARIABLE_SOLUTION_2[2]<<endl;
 
     //d_3_2 (-20)
-    d_3_2 = noap_input(2, 3) / cos(theta_2_3);
+    d_3_2 = noap_input(2, 3) / cos(theta_2_2);
         JOINT_VARIABLE_SOLUTION_3[2] = d_3_2;
         JOINT_VARIABLE_SOLUTION_4[2] = d_3_2;
         JOINT_VARIABLE_SOLUTION_7[2] = d_3_2;
@@ -376,7 +379,7 @@ void CartesianPoint_output(){
         JOINT_VARIABLE_SOLUTION_1[3] = theta_4_1*180/PI;
     //θ4-1 - 180
     theta_4_1 = (theta_4_1*180/PI) - 180;
-        JOINT_VARIABLE_SOLUTION_2[2] = theta_4_1;
+        JOINT_VARIABLE_SOLUTION_2[3] = theta_4_1;
 
     //θ4-2
     theta_4_2 = atan2((-1*sin(theta_1_2)*noap_input(0, 2)) + (cos(theta_1_2)*noap_input(1, 2)), (cos(theta_1_2)*cos(theta_2_2)*noap_input(0, 2)) + (sin(theta_1_2)*cos(theta_2_2)* noap_input(1, 2)) - (sin(theta_2_2)*noap_input(2, 2)));
@@ -384,7 +387,7 @@ void CartesianPoint_output(){
     
     //θ4-2 - 180 
     theta_4_2 = (theta_4_2*180/PI) - 180;
-        JOINT_VARIABLE_SOLUTION_4[3] = theta_4_2*180/PI;
+        JOINT_VARIABLE_SOLUTION_4[3] = theta_4_2;
     
     //θ4-3
     theta_4_3 = atan2((-1*sin(theta_1_1)*noap_input(0, 2)) + (cos(theta_1_1)*noap_input(1, 2)), (cos(theta_1_1)*cos(theta_2_1)*noap_input(0, 2)) + (sin(theta_1_1)*cos(theta_2_1)* noap_input(1, 2)) - (sin(theta_2_1)*noap_input(2, 2)));
@@ -392,7 +395,7 @@ void CartesianPoint_output(){
 
     //θ4-3 - 180
     theta_4_3 = (theta_4_3*180/PI) - 180;
-        JOINT_VARIABLE_SOLUTION_6[3] = theta_4_3*180/PI;
+        JOINT_VARIABLE_SOLUTION_6[3] = theta_4_3;
 
     //θ4-4
     theta_4_4 = atan2((-1*sin(theta_1_1)*noap_input(0, 2)) + (cos(theta_1_1)*noap_input(1, 2)), (cos(theta_1_1)*cos(theta_2_4)*noap_input(0, 2)) + (sin(theta_1_1)*cos(theta_2_4)* noap_input(1, 2)) - (sin(theta_2_4)*noap_input(2, 2)));
@@ -400,237 +403,118 @@ void CartesianPoint_output(){
 
     //θ4-4 - 180
     theta_4_4 = (theta_4_4*180/PI) - 180;
-        JOINT_VARIABLE_SOLUTION_8[3] = theta_4_4*180/PI;
+        JOINT_VARIABLE_SOLUTION_8[3] = theta_4_4;
 
     //θ5 -> eight solution
-    //θ5-1 possitive
-    temp_a = cos(theta_1_2)*cos(theta_2_3)*noap_input(0, 1) + sin(theta_1_2)*cos(theta_2_3)*noap_input(1, 1) - sin(theta_2_3)*noap_input(2, 1);
-    temp_b = -1*cos(theta_1_2)*sin(theta_2_3)*noap_input(0, 0) - sin(theta_1_2)*sin(theta_2_3)*noap_input(1, 0) - cos(theta_2_3)*noap_input(2, 0);
-
-    theta_5_1 = asinf(sqrt(pow(temp_a, 2) + pow(temp_b, 2)));
+    //θ5-1 positive
+    temp_a = cos(theta_1_2)*sin(theta_2_3)*noap_input(0, 1) + sin(theta_1_2)*sin(theta_2_3)*noap_input(1, 1) + cos(theta_2_3)*noap_input(2, 1);
+    temp_b = cos(theta_1_2)*sin(theta_2_3)*noap_input(0, 0) + sin(theta_1_2)*sin(theta_2_3)*noap_input(1, 0) + cos(theta_2_3)*noap_input(2, 0);
+    theta_5_1 = asin(sqrt(pow(temp_a, 2) + pow(temp_b, 2)));
         JOINT_VARIABLE_SOLUTION_1[4] = theta_5_1*180/PI;
     
     //θ5-1 negative
-    theta_5_1 = -1*theta_5_1;
-        JOINT_VARIABLE_SOLUTION_2[4] = theta_5_1*180/PI;
+        JOINT_VARIABLE_SOLUTION_2[4] = -1*(theta_5_1*180/PI);
 
-    //θ5-2 possitive
-    temp_a = cos(theta_1_2)*cos(theta_2_2)*noap_input(0, 1) + sin(theta_1_2)*cos(theta_2_2)*noap_input(1, 1) - sin(theta_2_2)*noap_input(2, 1);
-    temp_b = -1*cos(theta_1_2)*sin(theta_2_2)*noap_input(0, 0) - sin(theta_1_2)*sin(theta_2_2)*noap_input(1, 0) - cos(theta_2_2)*noap_input(2, 0);
-
-    theta_5_2 = PI - asinf(sqrt(pow(temp_a, 2) + pow(temp_b, 2)));
-        JOINT_VARIABLE_SOLUTION_3[4] = theta_5_2*180/PI;
+    //θ5-2 positive
+    temp_a = cos(theta_1_2)*sin(theta_2_2)*noap_input(0, 1) + sin(theta_1_2)*sin(theta_2_2)*noap_input(1, 1) + cos(theta_2_2)*noap_input(2, 1);
+    temp_b = cos(theta_1_2)*sin(theta_2_2)*noap_input(0, 0) + sin(theta_1_2)*sin(theta_2_2)*noap_input(1, 0) + cos(theta_2_2)*noap_input(2, 0);
+    theta_5_2 = asin(sqrt(pow(temp_a, 2) + pow(temp_b, 2)));
+        JOINT_VARIABLE_SOLUTION_3[4] = 180 - theta_5_2*180/PI;
 
     //θ5-2 negative
-    theta_5_2 = -1*theta_5_2;
-        JOINT_VARIABLE_SOLUTION_4[4] = theta_5_2*180/PI;
+        JOINT_VARIABLE_SOLUTION_4[4] = -1*(180 - theta_5_2*180/PI);
 
-    //θ5-3 possitive
-    temp_a = cos(theta_1_1)*cos(theta_2_4)*noap_input(0, 1) + sin(theta_1_1)*cos(theta_2_4)*noap_input(1, 1) - sin(theta_2_4)*noap_input(2, 1);
-    temp_b = -1*cos(theta_1_1)*sin(theta_2_4)*noap_input(0, 0) - sin(theta_1_1)*sin(theta_2_4)*noap_input(1, 0) - cos(theta_2_4)*noap_input(2, 0);
-
-    theta_5_3 = asinf(sqrt(pow(temp_a, 2) + pow(temp_b, 2)));
+    //θ5-3 positive
+    temp_a = cos(theta_1_1)*sin(theta_2_1)*noap_input(0, 1) + sin(theta_1_1)*sin(theta_2_1)*noap_input(1, 1) + cos(theta_2_1)*noap_input(2, 1);
+    temp_b = cos(theta_1_1)*sin(theta_2_1)*noap_input(0, 0) + sin(theta_1_1)*sin(theta_2_1)*noap_input(1, 0) + cos(theta_2_1)*noap_input(2, 0);
+    theta_5_3 = asin(sqrt(pow(temp_a, 2) + pow(temp_b, 2)));
         JOINT_VARIABLE_SOLUTION_5[4] = theta_5_3*180/PI;
-        cout<<theta_5_3*180/PI<<endl;
 
-    //θ6
+    //θ5-3 negative
+        JOINT_VARIABLE_SOLUTION_6[4] = -1*(theta_5_3*180/PI);
 
+    //θ5-4 positive
+    temp_a = cos(theta_1_1)*sin(theta_2_4)*noap_input(0, 1) + sin(theta_1_1)*sin(theta_2_4)*noap_input(1, 1) + cos(theta_2_4)*noap_input(2, 1);
+    temp_b = cos(theta_1_1)*sin(theta_2_4)*noap_input(0, 0) + sin(theta_1_1)*sin(theta_2_4)*noap_input(1, 0) + cos(theta_2_4)*noap_input(2, 0);
+    theta_5_4 = asin(sqrt(pow(temp_a, 2) + pow(temp_b, 2)));
+        JOINT_VARIABLE_SOLUTION_7[4] = 180 - theta_5_4*180/PI;
 
+    //θ5-4 negative
+        JOINT_VARIABLE_SOLUTION_8[4] = -1*(180 - theta_5_4*180/PI);
 
-/*
-    cout<<" | 00 , 01 , 02 , 03 |"<<endl;
-    cout<<" | 10 , 11 , 12 , 13 |"<<endl;
-    cout<<" | 20 , 21 , 22 , 23 |"<<endl;
-    cout<<" | 30 , 31 , 32 , 33 |"<<endl;
-*/
+    //θ6 -> eight solution
+    //θ6-1 
+    temp_a =  cos(theta_1_2)*sin(theta_2_3)*noap_input(0, 1) + sin(theta_1_2)*sin(theta_2_3)*noap_input(1, 1) + cos(theta_2_3)*noap_input(2, 1);
+    temp_b = (cos(theta_1_2)*sin(theta_2_3)*noap_input(0, 0) + sin(theta_1_2)*sin(theta_2_3)*noap_input(1, 0) + cos(theta_2_3)*noap_input(2, 0))*-1;
+    theta_6_1 = atan2(temp_a, temp_b);
+        JOINT_VARIABLE_SOLUTION_1[5] = theta_6_1*180/PI;
+
+    //θ6-1 -180
+    theta_6_1 = (atan2(temp_a, temp_b)*180/PI) - 180;
+        JOINT_VARIABLE_SOLUTION_2[5] = theta_6_1;
+
+    //θ6-2
+    temp_a =  cos(theta_1_2)*sin(theta_2_2)*noap_input(0, 1) + sin(theta_1_2)*sin(theta_2_2)*noap_input(1, 1) + cos(theta_2_2)*noap_input(2, 1);
+    temp_b = (cos(theta_1_2)*sin(theta_2_2)*noap_input(0, 0) + sin(theta_1_2)*sin(theta_2_2)*noap_input(1, 0) + cos(theta_2_2)*noap_input(2, 0))*-1;
+    theta_6_2 = atan2(temp_a, temp_b);
+        JOINT_VARIABLE_SOLUTION_3[5] = theta_6_2*180/PI;
+
+    //θ6-2 - 180
+    theta_6_2 = (atan2(temp_a, temp_b)*180/PI) + 180;
+        JOINT_VARIABLE_SOLUTION_4[5] = theta_6_2;
+
+    //θ6-3
+    temp_a =  cos(theta_1_1)*sin(theta_2_1)*noap_input(0, 1) + sin(theta_1_1)*sin(theta_2_1)*noap_input(1, 1) + cos(theta_2_1)*noap_input(2, 1);
+    temp_b = (cos(theta_1_1)*sin(theta_2_1)*noap_input(0, 0) + sin(theta_1_1)*sin(theta_2_1)*noap_input(1, 0) + cos(theta_2_1)*noap_input(2, 0))*-1;
+    theta_6_3 = atan2(temp_a, temp_b);
+        JOINT_VARIABLE_SOLUTION_5[5] = theta_6_3*180/PI;
+
+    //θ6-3 - 180
+    theta_6_3 = (atan2(temp_a, temp_b)*180/PI) - 180;
+        JOINT_VARIABLE_SOLUTION_6[5] = theta_6_3;
     
+    //θ6-4
+    temp_a =  cos(theta_1_1)*sin(theta_2_4)*noap_input(0, 1) + sin(theta_1_1)*sin(theta_2_4)*noap_input(1, 1) + cos(theta_2_4)*noap_input(2, 1);
+    temp_b = (cos(theta_1_1)*sin(theta_2_4)*noap_input(0, 0) + sin(theta_1_1)*sin(theta_2_4)*noap_input(1, 0) + cos(theta_2_4)*noap_input(2, 0))*-1;
+    theta_6_4 = atan2(temp_a, temp_b);
+        JOINT_VARIABLE_SOLUTION_7[5] = theta_6_4*180/PI;
+
+    //θ6-4
+    theta_6_4 = (atan2(temp_a, temp_b)*180/PI) + 180;
+        JOINT_VARIABLE_SOLUTION_8[5] = theta_6_4; 
 
 }
 
-void output_check(){
-    //print solution 1
-    cout<<"<sol_1>Corresponding variables (θ1, θ2, d3, θ4, θ5, θ6): "<<endl;
+//this function handles for showing the answer calculated by inverse kinematics
+//this function using global matrix & determine whether the angle limit is met
+void output_check(double JOINT_VARIABLE_SOLUTION[6]){
+    cout<<"<sol>Corresponding variables (θ1, θ2, d3, θ4, θ5, θ6): "<<endl;
+    cout<<" (";
     for(int i = 0; i < 6; i++){
-        cout<<JOINT_VARIABLE_SOLUTION_1[i]<<" ";
+        cout<<"  "<<JOINT_VARIABLE_SOLUTION[i]<<" ";
+    }
+    cout<<" )"<<endl;
+
+    if(JOINT_VARIABLE_SOLUTION[0] >= 160 || JOINT_VARIABLE_SOLUTION[0] <= -160){
+        cout<<"[error] θ1 is out of range"<<endl;
+
+    }
+    if(JOINT_VARIABLE_SOLUTION[1] >= 125 || JOINT_VARIABLE_SOLUTION[1] <= -125){
+        cout<<"[error] θ2 is out of range"<<endl;
+    }
+    if(JOINT_VARIABLE_SOLUTION[2] >= 30 || JOINT_VARIABLE_SOLUTION[2] <= -30){
+        cout<<"[error] d3 is out of range"<<endl;
+    }
+    if(JOINT_VARIABLE_SOLUTION[3] >= 140 || JOINT_VARIABLE_SOLUTION[3] <= -140){
+        cout<<"[error] θ4 is out of range"<<endl;
+    }
+    if(JOINT_VARIABLE_SOLUTION[4] >= 100 || JOINT_VARIABLE_SOLUTION[4] <= -100){
+        cout<<"[error] θ5 is out of range"<<endl;
+    }
+    if(JOINT_VARIABLE_SOLUTION[5] >= 260 || JOINT_VARIABLE_SOLUTION[0] <= -260){
+        cout<<"[error] θ6 is out of range"<<endl;
     }
     cout<<endl;
-
-    if(JOINT_VARIABLE_SOLUTION_1[0] >= 160 && JOINT_VARIABLE_SOLUTION_1[0] <= -160){
-            cout<<"[error] θ1 is out of range"<<endl;
-        }else if(JOINT_VARIABLE_SOLUTION_1[1] >= 125 && JOINT_VARIABLE_SOLUTION_1[1] <= -125){
-            cout<<"[error] θ2 is out of range"<<endl;
-        }else if(JOINT_VARIABLE_SOLUTION_1[2] >= 30 && JOINT_VARIABLE_SOLUTION_1[2] <= -30){
-            cout<<"[error] d3 is out of range"<<endl;
-        }else if(JOINT_VARIABLE_SOLUTION_1[3] >= 140 && JOINT_VARIABLE_SOLUTION_1[3] <= -140){
-            cout<<"[error] θ4 is out of range"<<endl;
-        }else if(JOINT_VARIABLE_SOLUTION_1[4] >= 100 && JOINT_VARIABLE_SOLUTION_1[4] <= -100){
-            cout<<"[error] θ5 is out of range"<<endl;
-        }else if(JOINT_VARIABLE_SOLUTION_1[5] >= 260 && JOINT_VARIABLE_SOLUTION_1[0] <= -260){
-            cout<<"[error] θ6 is out of range"<<endl;
-        }
-    
-    cout<<" "<<endl;
-
-    //print solution 2
-    cout<<"<sol_2>Corresponding variables (θ1, θ2, d3, θ4, θ5, θ6): "<<endl;
-    for(int i = 0; i < 6; i++){
-        cout<<JOINT_VARIABLE_SOLUTION_2[i]<<" ";
-    }
     cout<<endl;
-
-    if(JOINT_VARIABLE_SOLUTION_1[0] >= 160 && JOINT_VARIABLE_SOLUTION_1[0] <= -160){
-            cout<<"[error] θ1 is out of range"<<endl;
-        }else if(JOINT_VARIABLE_SOLUTION_2[1] >= 125 && JOINT_VARIABLE_SOLUTION_3[1] <= -125){
-            cout<<"[error] θ2 is out of range"<<endl;
-        }else if(JOINT_VARIABLE_SOLUTION_2[2] >= 30 && JOINT_VARIABLE_SOLUTION_3[2] <= -30){
-            cout<<"[error] d3 is out of range"<<endl;
-        }else if(JOINT_VARIABLE_SOLUTION_2[3] >= 140 && JOINT_VARIABLE_SOLUTION_3[3] <= -140){
-            cout<<"[error] θ4 is out of range"<<endl;
-        }else if(JOINT_VARIABLE_SOLUTION_2[4] >= 100 && JOINT_VARIABLE_SOLUTION_3[4] <= -100){
-            cout<<"[error] θ5 is out of range"<<endl;
-        }else if(JOINT_VARIABLE_SOLUTION_2[5] >= 260 && JOINT_VARIABLE_SOLUTION_3[0] <= -260){
-            cout<<"[error] θ6 is out of range"<<endl;
-        }
-
-    cout<<" "<<endl;
-
-    //print solution 3
-    cout<<"<sol_3>Corresponding variables (θ1, θ2, d3, θ4, θ5, θ6): "<<endl;
-    for(int i = 0; i < 6; i++){
-        cout<<JOINT_VARIABLE_SOLUTION_3[i]<<" ";
-    }
-    cout<<endl;
-
-    if(JOINT_VARIABLE_SOLUTION_3[0] >= 160 && JOINT_VARIABLE_SOLUTION_1[0] <= -160){
-            cout<<"[error] θ1 is out of range"<<endl;
-        }else if(JOINT_VARIABLE_SOLUTION_3[1] >= 125 && JOINT_VARIABLE_SOLUTION_3[1] <= -125){
-            cout<<"[error] θ2 is out of range"<<endl;
-        }else if(JOINT_VARIABLE_SOLUTION_3[2] >= 30 && JOINT_VARIABLE_SOLUTION_3[2] <= -30){
-            cout<<"[error] d3 is out of range"<<endl;
-        }else if(JOINT_VARIABLE_SOLUTION_3[3] >= 140 && JOINT_VARIABLE_SOLUTION_3[3] <= -140){
-            cout<<"[error] θ4 is out of range"<<endl;
-        }else if(JOINT_VARIABLE_SOLUTION_3[4] >= 100 && JOINT_VARIABLE_SOLUTION_3[4] <= -100){
-            cout<<"[error] θ5 is out of range"<<endl;
-        }else if(JOINT_VARIABLE_SOLUTION_3[5] >= 260 && JOINT_VARIABLE_SOLUTION_3[0] <= -260){
-            cout<<"[error] θ6 is out of range"<<endl;
-        }
-
-    cout<<" "<<endl;
-    
-    //print solution 4
-    cout<<"<sol_4>Corresponding variables (θ1, θ2, d3, θ4, θ5, θ6): "<<endl;
-    for(int i = 0; i < 6; i++){
-        cout<<JOINT_VARIABLE_SOLUTION_4[i]<<" ";
-    }
-    cout<<endl;
-
-    if(JOINT_VARIABLE_SOLUTION_4[0] >= 160 && JOINT_VARIABLE_SOLUTION_1[0] <= -160){
-            cout<<"[error] θ1 is out of range"<<endl;
-        }else if(JOINT_VARIABLE_SOLUTION_4[1] >= 125 && JOINT_VARIABLE_SOLUTION_4[1] <= -125){
-            cout<<"[error] θ2 is out of range"<<endl;
-        }else if(JOINT_VARIABLE_SOLUTION_4[2] >= 30 && JOINT_VARIABLE_SOLUTION_4[2] <= -30){
-            cout<<"[error] d3 is out of range"<<endl;
-        }else if(JOINT_VARIABLE_SOLUTION_4[3] >= 140 && JOINT_VARIABLE_SOLUTION_4[3] <= -140){
-            cout<<"[error] θ4 is out of range"<<endl;
-        }else if(JOINT_VARIABLE_SOLUTION_4[4] >= 100 && JOINT_VARIABLE_SOLUTION_4[4] <= -100){
-            cout<<"[error] θ5 is out of range"<<endl;
-        }else if(JOINT_VARIABLE_SOLUTION_4[5] >= 260 && JOINT_VARIABLE_SOLUTION_4[0] <= -260){
-            cout<<"[error] θ6 is out of range"<<endl;
-        }
-
-    cout<<" "<<endl;
-
-    //print solution 5
-    cout<<"<sol_5>Corresponding variables (θ1, θ2, d3, θ4, θ5, θ6): "<<endl;
-    for(int i = 0; i < 6; i++){
-        cout<<JOINT_VARIABLE_SOLUTION_5[i]<<" ";
-    }
-    cout<<endl;
-
-    if(JOINT_VARIABLE_SOLUTION_5[0] >= 160 && JOINT_VARIABLE_SOLUTION_1[0] <= -160){
-            cout<<"[error] θ1 is out of range"<<endl;
-        }else if(JOINT_VARIABLE_SOLUTION_5[1] >= 125 && JOINT_VARIABLE_SOLUTION_5[1] <= -125){
-            cout<<"[error] θ2 is out of range"<<endl;
-        }else if(JOINT_VARIABLE_SOLUTION_5[2] >= 30 && JOINT_VARIABLE_SOLUTION_5[2] <= -30){
-            cout<<"[error] d3 is out of range"<<endl;
-        }else if(JOINT_VARIABLE_SOLUTION_5[3] >= 140 && JOINT_VARIABLE_SOLUTION_5[3] <= -140){
-            cout<<"[error] θ4 is out of range"<<endl;
-        }else if(JOINT_VARIABLE_SOLUTION_5[4] >= 100 && JOINT_VARIABLE_SOLUTION_5[4] <= -100){
-            cout<<"[error] θ5 is out of range"<<endl;
-        }else if(JOINT_VARIABLE_SOLUTION_5[5] >= 260 && JOINT_VARIABLE_SOLUTION_5[0] <= -260){
-            cout<<"[error] θ6 is out of range"<<endl;
-        }
-
-    cout<<" "<<endl;
-
-    //print solution 6
-    cout<<"<sol_6>Corresponding variables (θ1, θ2, d3, θ4, θ5, θ6): "<<endl;
-    for(int i = 0; i < 6; i++){
-        cout<<JOINT_VARIABLE_SOLUTION_6[i]<<" ";
-    }
-    cout<<endl;
-
-    if(JOINT_VARIABLE_SOLUTION_6[0] >= 160 && JOINT_VARIABLE_SOLUTION_1[0] <= -160){
-            cout<<"[error] θ1 is out of range"<<endl;
-        }else if(JOINT_VARIABLE_SOLUTION_6[1] >= 125 && JOINT_VARIABLE_SOLUTION_6[1] <= -125){
-            cout<<"[error] θ2 is out of range"<<endl;
-        }else if(JOINT_VARIABLE_SOLUTION_6[2] >= 30 && JOINT_VARIABLE_SOLUTION_6[2] <= -30){
-            cout<<"[error] d3 is out of range"<<endl;
-        }else if(JOINT_VARIABLE_SOLUTION_6[3] >= 140 && JOINT_VARIABLE_SOLUTION_6[3] <= -140){
-            cout<<"[error] θ4 is out of range"<<endl;
-        }else if(JOINT_VARIABLE_SOLUTION_6[4] >= 100 && JOINT_VARIABLE_SOLUTION_6[4] <= -100){
-            cout<<"[error] θ5 is out of range"<<endl;
-        }else if(JOINT_VARIABLE_SOLUTION_6[5] >= 260 && JOINT_VARIABLE_SOLUTION_6[0] <= -260){
-            cout<<"[error] θ6 is out of range"<<endl;
-        }
-
-    cout<<" "<<endl;
-
-    //print solution 7
-    cout<<"<sol_7>Corresponding variables (θ1, θ2, d3, θ4, θ5, θ6): "<<endl;
-    for(int i = 0; i < 6; i++){
-        cout<<JOINT_VARIABLE_SOLUTION_7[i]<<" ";
-    }
-    cout<<endl;
-
-    if(JOINT_VARIABLE_SOLUTION_7[0] >= 160 && JOINT_VARIABLE_SOLUTION_1[0] <= -160){
-            cout<<"[error] θ1 is out of range"<<endl;
-        }else if(JOINT_VARIABLE_SOLUTION_7[1] >= 125 && JOINT_VARIABLE_SOLUTION_7[1] <= -125){
-            cout<<"[error] θ2 is out of range"<<endl;
-        }else if(JOINT_VARIABLE_SOLUTION_7[2] >= 30 && JOINT_VARIABLE_SOLUTION_7[2] <= -30){
-            cout<<"[error] d3 is out of range"<<endl;
-        }else if(JOINT_VARIABLE_SOLUTION_7[3] >= 140 && JOINT_VARIABLE_SOLUTION_7[3] <= -140){
-            cout<<"[error] θ4 is out of range"<<endl;
-        }else if(JOINT_VARIABLE_SOLUTION_7[4] >= 100 && JOINT_VARIABLE_SOLUTION_7[4] <= -100){
-            cout<<"[error] θ5 is out of range"<<endl;
-        }else if(JOINT_VARIABLE_SOLUTION_7[5] >= 260 && JOINT_VARIABLE_SOLUTION_7[0] <= -260){
-            cout<<"[error] θ6 is out of range"<<endl;
-        }
-    cout<<" "<<endl;
-
-    cout<<" "<<endl;
-    
-    //print solution 8
-    cout<<"<sol_8>Corresponding variables (θ1, θ2, d3, θ4, θ5, θ6): "<<endl;
-    for(int i = 0; i < 6; i++){
-        cout<<JOINT_VARIABLE_SOLUTION_8[i]<<" ";
-    }
-    cout<<endl;
-
-    if(JOINT_VARIABLE_SOLUTION_8[0] >= 160 && JOINT_VARIABLE_SOLUTION_8[0] <= -160){
-            cout<<"[error] θ1 is out of range"<<endl;
-        }else if(JOINT_VARIABLE_SOLUTION_8[1] >= 125 && JOINT_VARIABLE_SOLUTION_8[1] <= -125){
-            cout<<"[error] θ2 is out of range"<<endl;
-        }else if(JOINT_VARIABLE_SOLUTION_8[2] >= 30 && JOINT_VARIABLE_SOLUTION_8[2] <= -30){
-            cout<<"[error] d3 is out of range"<<endl;
-        }else if(JOINT_VARIABLE_SOLUTION_8[3] >= 140 && JOINT_VARIABLE_SOLUTION_8[3] <= -140){
-            cout<<"[error] θ4 is out of range"<<endl;
-        }else if(JOINT_VARIABLE_SOLUTION_8[4] >= 100 && JOINT_VARIABLE_SOLUTION_8[4] <= -100){
-            cout<<"[error] θ5 is out of range"<<endl;
-        }else if(JOINT_VARIABLE_SOLUTION_8[5] >= 260 && JOINT_VARIABLE_SOLUTION_8[0] <= -260){
-            cout<<"[error] θ6 is out of range"<<endl;
-        }
-
-    cout<<"-----------------------------------"<<endl;
         
 }
