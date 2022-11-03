@@ -59,6 +59,7 @@ int main(){
         if(mode == 'a'){    //choose mode a will into this loop
             CartesianPoint_input(); 
             CartesianPoint_output();
+            /*
             output_check(JOINT_VARIABLE_SOLUTION_1);
             output_check(JOINT_VARIABLE_SOLUTION_2);
             output_check(JOINT_VARIABLE_SOLUTION_3);
@@ -67,7 +68,7 @@ int main(){
             output_check(JOINT_VARIABLE_SOLUTION_6);
             output_check(JOINT_VARIABLE_SOLUTION_7);
             output_check(JOINT_VARIABLE_SOLUTION_8);
-
+            */
             cout<<"-----------------------------------"<<endl;
 
         }else{              //choose mode b ,will into this loop
@@ -312,8 +313,8 @@ void joint_variables_mode_output(){
 void CartesianPoint_output(){
     double theta_1_1, theta_1_2, 
            theta_2_1, theta_2_2, theta_2_3, theta_2_4,
-           theta_4_1, theta_4_2, theta_4_3, theta_4_4,
-           theta_5_1, theta_5_2, theta_5_3, theta_5_4,
+           theta_4_1_1, theta_4_1_2, theta_4_2_1, theta_4_2_2, theta_4_3_1, theta_4_3_2, theta_4_4_1, theta_4_4_2,
+           theta_5_1_1, theta_5_1_2, theta_5_2_1, theta_5_2_2, theta_5_3_1, theta_5_3_2, theta_5_4_1, theta_5_4_2,
            theta_6_1, theta_6_2, theta_6_3, theta_6_4,
            d_3_1, d_3_2;
 
@@ -364,7 +365,6 @@ void CartesianPoint_output(){
         JOINT_VARIABLE_SOLUTION_2[2] = d_3_1;
         JOINT_VARIABLE_SOLUTION_5[2] = d_3_1;
         JOINT_VARIABLE_SOLUTION_6[2] = d_3_1;
-        cout<<"[1]"<<JOINT_VARIABLE_SOLUTION_2[2]<<endl;
 
     //d_3_2 (-20)
     d_3_2 = noap_input(2, 3) / cos(theta_2_2);
@@ -374,73 +374,58 @@ void CartesianPoint_output(){
         JOINT_VARIABLE_SOLUTION_8[2] = d_3_2;
 
     //θ4 -> eight solution
-    //θ4-1
-    theta_4_1 = atan2((-1*sin(theta_1_2)*noap_input(0, 2)) + (cos(theta_1_2)*noap_input(1, 2)), (cos(theta_1_2)*cos(theta_2_3)*noap_input(0, 2)) + (sin(theta_1_2)*cos(theta_2_3)* noap_input(1, 2)) - (sin(theta_2_3)*noap_input(2, 2)));
-        JOINT_VARIABLE_SOLUTION_1[3] = theta_4_1*180/PI;
-    //θ4-1 - 180
-    theta_4_1 = (theta_4_1*180/PI) - 180;
-        JOINT_VARIABLE_SOLUTION_2[3] = theta_4_1;
+    //θ4-1 (79)
+    theta_4_1_1 = atan2((-1*sin(theta_1_2)*noap_input(0, 2)) + (cos(theta_1_2)*noap_input(1, 2)), (cos(theta_1_2)*cos(theta_2_3)*noap_input(0, 2)) + (sin(theta_1_2)*cos(theta_2_3)* noap_input(1, 2)) - (sin(theta_2_3)*noap_input(2, 2)));
+        JOINT_VARIABLE_SOLUTION_1[3] = theta_4_1_1*180/PI;
 
-    //θ4-2
-    theta_4_2 = atan2((-1*sin(theta_1_2)*noap_input(0, 2)) + (cos(theta_1_2)*noap_input(1, 2)), (cos(theta_1_2)*cos(theta_2_2)*noap_input(0, 2)) + (sin(theta_1_2)*cos(theta_2_2)* noap_input(1, 2)) - (sin(theta_2_2)*noap_input(2, 2)));
-        JOINT_VARIABLE_SOLUTION_3[3] = theta_4_2*180/PI;
+    //θ4-1 - 180 (-100)
+    theta_4_1_2 = (theta_4_1_1*180/PI) - 180;
+        JOINT_VARIABLE_SOLUTION_2[3] = theta_4_1_2;
+
+    //θ4-2(100)
+    theta_4_2_1 = atan2((-1*sin(theta_1_2)*noap_input(0, 2)) + (cos(theta_1_2)*noap_input(1, 2)), (cos(theta_1_2)*cos(theta_2_2)*noap_input(0, 2)) + (sin(theta_1_2)*cos(theta_2_2)* noap_input(1, 2)) - (sin(theta_2_2)*noap_input(2, 2)));
+        JOINT_VARIABLE_SOLUTION_3[3] = theta_4_2_1*180/PI;
     
-    //θ4-2 - 180 
-    theta_4_2 = (theta_4_2*180/PI) - 180;
-        JOINT_VARIABLE_SOLUTION_4[3] = theta_4_2;
+    //θ4-2 - 180  (-79)
+    theta_4_2_2 = (theta_4_2_1*180/PI) - 180;
+        JOINT_VARIABLE_SOLUTION_4[3] = theta_4_2_2;
     
-    //θ4-3
-    theta_4_3 = atan2((-1*sin(theta_1_1)*noap_input(0, 2)) + (cos(theta_1_1)*noap_input(1, 2)), (cos(theta_1_1)*cos(theta_2_1)*noap_input(0, 2)) + (sin(theta_1_1)*cos(theta_2_1)* noap_input(1, 2)) - (sin(theta_2_1)*noap_input(2, 2)));
-        JOINT_VARIABLE_SOLUTION_5[3] = theta_4_3*180/PI;
+    //θ4-3 (20)
+    theta_4_3_1 = atan2((-1*sin(theta_1_1)*noap_input(0, 2)) + (cos(theta_1_1)*noap_input(1, 2)), (cos(theta_1_1)*cos(theta_2_1)*noap_input(0, 2)) + (sin(theta_1_1)*cos(theta_2_1)* noap_input(1, 2)) - (sin(theta_2_1)*noap_input(2, 2)));
+        JOINT_VARIABLE_SOLUTION_5[3] = theta_4_3_1*180/PI;
 
-    //θ4-3 - 180
-    theta_4_3 = (theta_4_3*180/PI) - 180;
-        JOINT_VARIABLE_SOLUTION_6[3] = theta_4_3;
+    //θ4-3 - 180 (-160)
+    theta_4_3_2 = (theta_4_3_1*180/PI) - 180;
+        JOINT_VARIABLE_SOLUTION_6[3] = theta_4_3_2;
 
-    //θ4-4
-    theta_4_4 = atan2((-1*sin(theta_1_1)*noap_input(0, 2)) + (cos(theta_1_1)*noap_input(1, 2)), (cos(theta_1_1)*cos(theta_2_4)*noap_input(0, 2)) + (sin(theta_1_1)*cos(theta_2_4)* noap_input(1, 2)) - (sin(theta_2_4)*noap_input(2, 2)));
-        JOINT_VARIABLE_SOLUTION_7[3] = theta_4_4*180/PI;
+    //θ4-4 (160)
+    theta_4_4_1 = atan2((-1*sin(theta_1_1)*noap_input(0, 2)) + (cos(theta_1_1)*noap_input(1, 2)), (cos(theta_1_1)*cos(theta_2_4)*noap_input(0, 2)) + (sin(theta_1_1)*cos(theta_2_4)* noap_input(1, 2)) - (sin(theta_2_4)*noap_input(2, 2)));
+        JOINT_VARIABLE_SOLUTION_7[3] = theta_4_4_1*180/PI;
 
-    //θ4-4 - 180
-    theta_4_4 = (theta_4_4*180/PI) - 180;
-        JOINT_VARIABLE_SOLUTION_8[3] = theta_4_4;
+    //θ4-4 - 180 (-20)
+    theta_4_4_2 = (theta_4_4_1*180/PI) - 180;
+        JOINT_VARIABLE_SOLUTION_8[3] = theta_4_4_2;
 
     //θ5 -> eight solution
-    //θ5-1 positive
-    temp_a = cos(theta_1_2)*sin(theta_2_3)*noap_input(0, 1) + sin(theta_1_2)*sin(theta_2_3)*noap_input(1, 1) + cos(theta_2_3)*noap_input(2, 1);
-    temp_b = cos(theta_1_2)*sin(theta_2_3)*noap_input(0, 0) + sin(theta_1_2)*sin(theta_2_3)*noap_input(1, 0) + cos(theta_2_3)*noap_input(2, 0);
-    theta_5_1 = asin(sqrt(pow(temp_a, 2) + pow(temp_b, 2)));
-        JOINT_VARIABLE_SOLUTION_1[4] = theta_5_1*180/PI;
+    //θ5-1 
+    temp_a = ((cos(theta_1_2)*cos(theta_2_3)*cos(theta_4_1_1) - sin(theta_1_2)*sin(theta_4_1_1))*noap_input(0 ,2)) + ((sin(theta_1_2)*cos(theta_2_3)*cos(theta_4_1_1) + cos(theta_1_2)*sin(theta_4_1_1))*noap_input(1, 2)) + ((-1*sin(theta_2_3)*cos(theta_4_1_1))*noap_input(2, 2));
+    temp_b = (cos(theta_1_2)*sin(theta_2_3)*noap_input(0, 2)) + (sin(theta_1_2)*sin(theta_2_3)*noap_input(1, 2)) + (cos(theta_2_3)*noap_input(2, 2));
+    theta_5_1 = atan2(temp_a, temp_b);
+
+    //θ5-2
+
+    //θ5-3
+
+    //θ5-4
+
+    //θ5-5
+
+    //θ5-6
+
+    //θ5-7
+
+    //θ5-8
     
-    //θ5-1 negative
-        JOINT_VARIABLE_SOLUTION_2[4] = -1*(theta_5_1*180/PI);
-
-    //θ5-2 positive
-    temp_a = cos(theta_1_2)*sin(theta_2_2)*noap_input(0, 1) + sin(theta_1_2)*sin(theta_2_2)*noap_input(1, 1) + cos(theta_2_2)*noap_input(2, 1);
-    temp_b = cos(theta_1_2)*sin(theta_2_2)*noap_input(0, 0) + sin(theta_1_2)*sin(theta_2_2)*noap_input(1, 0) + cos(theta_2_2)*noap_input(2, 0);
-    theta_5_2 = asin(sqrt(pow(temp_a, 2) + pow(temp_b, 2)));
-        JOINT_VARIABLE_SOLUTION_3[4] = 180 - theta_5_2*180/PI;
-
-    //θ5-2 negative
-        JOINT_VARIABLE_SOLUTION_4[4] = -1*(180 - theta_5_2*180/PI);
-
-    //θ5-3 positive
-    temp_a = cos(theta_1_1)*sin(theta_2_1)*noap_input(0, 1) + sin(theta_1_1)*sin(theta_2_1)*noap_input(1, 1) + cos(theta_2_1)*noap_input(2, 1);
-    temp_b = cos(theta_1_1)*sin(theta_2_1)*noap_input(0, 0) + sin(theta_1_1)*sin(theta_2_1)*noap_input(1, 0) + cos(theta_2_1)*noap_input(2, 0);
-    theta_5_3 = asin(sqrt(pow(temp_a, 2) + pow(temp_b, 2)));
-        JOINT_VARIABLE_SOLUTION_5[4] = theta_5_3*180/PI;
-
-    //θ5-3 negative
-        JOINT_VARIABLE_SOLUTION_6[4] = -1*(theta_5_3*180/PI);
-
-    //θ5-4 positive
-    temp_a = cos(theta_1_1)*sin(theta_2_4)*noap_input(0, 1) + sin(theta_1_1)*sin(theta_2_4)*noap_input(1, 1) + cos(theta_2_4)*noap_input(2, 1);
-    temp_b = cos(theta_1_1)*sin(theta_2_4)*noap_input(0, 0) + sin(theta_1_1)*sin(theta_2_4)*noap_input(1, 0) + cos(theta_2_4)*noap_input(2, 0);
-    theta_5_4 = asin(sqrt(pow(temp_a, 2) + pow(temp_b, 2)));
-        JOINT_VARIABLE_SOLUTION_7[4] = 180 - theta_5_4*180/PI;
-
-    //θ5-4 negative
-        JOINT_VARIABLE_SOLUTION_8[4] = -1*(180 - theta_5_4*180/PI);
 
     //θ6 -> eight solution
     //θ6-1 
