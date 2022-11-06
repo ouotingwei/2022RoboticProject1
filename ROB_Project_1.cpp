@@ -27,7 +27,7 @@ void CartesianPoint_output();
 void output_check(double JOINT_VARIABLE_SOLUTION[6]);
 
 //GLOBAL VARIABLE
-double PI = 3.141592;
+double PI = 3.141593;
 double d2 = 6.375000;
 char mode;
 double CartesianPoint[4]={0,0,0,0}; // [0] = n, [1] = o, [2] = a, [3] = p
@@ -212,22 +212,22 @@ void CartesianPoint_input(){
     cout<<" | 30 , 31 , 32 , 33 |"<<endl;
 
     //test data
-    noap_input(0, 0) = 0.312899788315632;
+    noap_input(0, 0) = 0.312899788315632;  //n
     noap_input(1, 0) = 0.777300157424024;
-    noap_input(2, 0) = -0.525800501777546;
+    noap_input(2, 0) = -0.545800501777546;
     noap_input(3, 0) = 0;
 
-    noap_input(0, 1) = -0.777300157424024;
+    noap_input(0, 1) = -0.777300157424024;  //o
     noap_input(1, 1) = 0.539800721952620;
     noap_input(2, 1) = 0.323140288184588;
     noap_input(3, 1) = 0;
 
-    noap_input(0, 2) = 0.545800501777546;
+    noap_input(0, 2) = 0.545800501777546;   //a
     noap_input(1, 2) = 0.323140288184588;
     noap_input(2, 2) = 0.773099066363012;    
     noap_input(3, 2) = 0;
 
-    noap_input(0, 3) = 4.247497683164255;
+    noap_input(0, 3) = 4.247497683164255;   //p
     noap_input(1, 3) = 8.330096026320385;
     noap_input(2, 3) = 18.793852415718170;
     noap_input(3, 3) = 1;
@@ -318,9 +318,8 @@ void CartesianPoint_output(){
            theta_5_1_1, theta_5_1_2, theta_5_2_1, theta_5_2_2, theta_5_3_1, theta_5_3_2, theta_5_4_1, theta_5_4_2,
            theta_6_1_1, theta_6_1_2, theta_6_2_1, theta_6_2_2, theta_6_3_1, theta_6_3_2, theta_6_4_1, theta_6_4_2,
            d_3_1, d_3_2;
-    
-    double temp_fr;
-    double temp_bk;
+
+    double temp_fr, temp_bk;
     double temp_a, temp_b;
 
     //dx = 03 ; dy = 13 ; dz = 23
@@ -523,16 +522,7 @@ void CartesianPoint_output(){
     temp_a = (temp_fr)*noap_input(0, 0) + (temp_bk)*noap_input(1, 0) + (sin(theta_2_4)*sin(theta_4_4_2))*noap_input(2, 0);
     temp_b = (temp_fr)*noap_input(0, 1) + (temp_bk)*noap_input(1, 1) + (sin(theta_2_4)*sin(theta_4_4_2))*noap_input(2, 1);
     theta_6_4_2 = atan2(temp_a, temp_b);
-        JOINT_VARIABLE_SOLUTION_8[5] = theta_6_4_2*180/PI;
-
-    /*
-    cout<<"<-> please enter Cartesian Point [n, o, a, p] : "<<endl;
-    cout<<" | 00 , 01 , 02 , 03 |"<<endl;
-    cout<<" | 10 , 11 , 12 , 13 |"<<endl;
-    cout<<" | 20 , 21 , 22 , 23 |"<<endl;
-    cout<<" | 30 , 31 , 32 , 33 |"<<endl;
-    */
-    
+        JOINT_VARIABLE_SOLUTION_8[5] = theta_6_4_2*180/PI; 
 
 }
 
