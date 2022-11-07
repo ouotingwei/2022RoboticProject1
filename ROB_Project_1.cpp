@@ -53,6 +53,11 @@ using namespace std;
 
 int main(){
 
+    noap_input << 0, 0, 0, 0,
+              0, 0, 0, 0,
+              0, 0, 0, 0,
+              0, 0, 0, 1;
+
     while(1){   //press ctrl-c to stop the loop
         choose_input_mode();
 
@@ -109,6 +114,7 @@ void choose_input_mode(){
 void joint_variables_mode_input(){
     cout<<"<-> please enter joint variables "<<endl;
 
+    // theta 1
     while(while_flag == false){
             cout<<"     θ1 (-160 ~ 160) = ";
             cin>>joint_variables[0];
@@ -124,7 +130,7 @@ void joint_variables_mode_input(){
     }
     
     while_flag = false;
-    while(while_flag == false){
+    while(while_flag == false){// theta 2
             cout<<"     θ2 (-125 ~ 125) = ";
             cin>>joint_variables[1];
 
@@ -139,7 +145,7 @@ void joint_variables_mode_input(){
     }
 
     while_flag = false;
-    while(while_flag == false){
+    while(while_flag == false){// d 3
             cout<<"     d3 (-30 ~ 30) = ";
             cin>>joint_variables[2];
 
@@ -153,7 +159,7 @@ void joint_variables_mode_input(){
     }
 
     while_flag = false;
-    while(while_flag == false){
+    while(while_flag == false){// theta 4
             cout<<"     θ4 (-140 ~ 140) = ";
             cin>>joint_variables[3];
 
@@ -168,7 +174,7 @@ void joint_variables_mode_input(){
     }
 
     while_flag = false;
-    while(while_flag == false){
+    while(while_flag == false){// theta 5
             cout<<"     θ5 (-100 ~ 100) = ";
             cin>>joint_variables[4];
 
@@ -183,7 +189,7 @@ void joint_variables_mode_input(){
     }
 
     while_flag = false;
-    while(while_flag == false){
+    while(while_flag == false){//theta 6
             cout<<"     θ6 (-260 ~ 260) = ";
             cin>>joint_variables[5];
 
@@ -211,7 +217,15 @@ void CartesianPoint_input(){
     cout<<" | 20 , 21 , 22 , 23 |"<<endl;
     cout<<" | 30 , 31 , 32 , 33 |"<<endl;
 
+    cout<<" please enter nx , ox , ax , px : ";
+    cin>>noap_input(0, 0) >> noap_input(0, 1) >> noap_input(0, 2) >> noap_input(0, 3);
+    cout<<" please enter ny , oy , ay , py : ";
+    cin>>noap_input(1, 0) >> noap_input(1, 1) >> noap_input(1, 2) >> noap_input(1, 3);
+    cout<<" please enter nz , oz , az , pz : ";
+    cin>>noap_input(2, 0) >> noap_input(2, 1) >> noap_input(2, 2) >> noap_input(2, 3);
+
     //test data
+    /*
     noap_input(0, 0) = 0.312899788315632;  //n
     noap_input(1, 0) = 0.777300157424024;
     noap_input(2, 0) = -0.545800501777546;
@@ -231,6 +245,7 @@ void CartesianPoint_input(){
     noap_input(1, 3) = 8.330096026320385;
     noap_input(2, 3) = 18.793852415718170;
     noap_input(3, 3) = 1;
+    */
 
     cout<<"-----------------------------------"<<endl;
 }
@@ -241,7 +256,7 @@ void CartesianPoint_input(){
 //this function will calculate & print Cartesian Point
 void joint_variables_mode_output(){
     
-    double x, y, z, A, B, C, a;
+    double x, y, z, A, B, C;
     Matrix<double, 4, 4> A1;
     Matrix<double, 4, 4> A2;
     Matrix<double, 4, 4> A3;
@@ -293,10 +308,10 @@ void joint_variables_mode_output(){
     y = T6(1,3);
     z = T6(2,3);
     //euler angle z-y-z (ϕ, θ, ψ)
-    a = atan2(T6(1, 2), T6(0, 2));
-    A = a*180/PI;
-    B = (atan2((T6(0, 2)*cos(a)) + (T6(1, 2)*sin(a)), T6(2,2))*180/PI);
-    C = (atan2((-1*T6(0, 0)*sin(a) + (T6(1, 0)*cos(a))), (-1*T6(0, 1)*sin(a)) + (T6(1, 1)*cos(a)))*180/PI);
+    // B = θ , A = ϕ , C = ψ
+    B = atan2(sqrt(pow(T6(2, 0), 2) + pow(T6(2, 1), 2)), T6(2, 2))*180/PI;
+    A = atan2((T6(1, 2)/sin(B)), (T6(0, 2)/sin(B)))*180/PI;
+    C = atan2((T6(2, 1)/sin(B)), (-1*T6(2, 0)/sin(B)))*180/PI;
 
     //show solution
     cout<<"(n, o, a, p) = "<<endl;
@@ -466,7 +481,6 @@ void CartesianPoint_output(){
     temp_b = (temp_fr)*noap_input(0, 1) + (temp_bk)*noap_input(1, 1) + (sin(theta_2_3)*sin(theta_4_1_1))*noap_input(2, 1);
     theta_6_1_1 = atan2(temp_a, temp_b);
         JOINT_VARIABLE_SOLUTION_1[5] = theta_6_1_1*180/PI;
-        cout<<"[1]"<<JOINT_VARIABLE_SOLUTION_1[5]<<endl;
 
     //θ6-1-2
     temp_fr = (-1*(cos(theta_1_2)*cos(theta_2_3)*sin(theta_4_1_2))) - (sin(theta_1_2)*cos(theta_4_1_2));
